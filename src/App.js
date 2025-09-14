@@ -1,25 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import HomePage from "./pages/HomePage";
+import TareasPage from "./pages/TareasPage";
+import CrearTareaPage from "./pages/CrearTareaPage";
+import TareaDetallePage from "./pages/TareaDetallePage";
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Navbar />
+      <div style={{ padding: 16 }}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/tareas" element={<TareasPage />} />
+          <Route path="/crear" element={<CrearTareaPage />} />
+          <Route path="/tarea/:id" element={<TareaDetallePage />} />
+        </Routes>
+      </div>
+    </>
   );
 }
 
-export default App;
