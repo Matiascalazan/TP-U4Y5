@@ -8,47 +8,50 @@ export default function TareasPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = "AppTareas | TP U4y5";
-
+    document.title = "Gestor de Tareas";
     const id = setTimeout(() => {
       setTareas([
-        { id: 1, titulo: "Terminar tp 4y5-DesarrolloWeb" },
-        { id: 2, titulo: "Estudiar para el parcial" },
-        { id: 3, titulo: "Ordenar cuarto" },
+        { id: 1, titulo: "Terminar TP U4y5" },
+        { id: 2, titulo: "Estudiar para el parcial de Desarrollo WEB" },
+        { id: 3, titulo: "Gimnasio 7hs" },
       ]);
       setCargando(false);
-    }, 1000);
-
+    }, 900);
     return () => clearTimeout(id);
   }, []);
 
   useEffect(() => {
     if (!cargando && location.state?.nuevaTarea) {
       const nueva = location.state.nuevaTarea;
-      setTareas(prev =>
-        prev.some(t => t.id === nueva.id) ? prev : [...prev, nueva]
-      );
+      setTareas(prev => prev.some(t => t.id === nueva.id) ? prev : [...prev, nueva]);
       navigate(".", { replace: true, state: null });
     }
   }, [cargando, location.state, navigate]);
 
-  if (cargando) return <p>Cargando tareas...</p>;
-
   return (
     <section>
-      <h2>Lista de Tareas</h2>
-      {tareas.length === 0 ? (
-        <p>No hay tareas aún.</p>
+      <h2 style={{ margin: "6px 0 12px" }}>Lista de Tareas</h2>
+
+      {cargando ? (
+        <ul className="list">
+          {Array.from({length: 3}).map((_,i)=>(
+            <li key={i} className="card"><div className="skeleton" /></li>
+          ))}
+        </ul>
+      ) : tareas.length === 0 ? (
+        <div className="card">No hay tareas aún.</div>
       ) : (
-        <ul>
+        <ul className="list">
           {tareas.map((t) => (
-            <li key={t.id}>
-              <Link to={`/tarea/${t.id}`}>{t.titulo}</Link>
+            <li key={t.id} className="card">
+              <Link to={`/tarea/${t.id}`} style={{ textDecoration:"none" }}>
+                {t.titulo}
+              </Link>
             </li>
           ))}
         </ul>
       )}
-      <p><Link to="/crear">+ Crear otra tarea</Link></p>
     </section>
   );
 }
+

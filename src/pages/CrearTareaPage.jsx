@@ -6,35 +6,31 @@ export default function CrearTareaPage() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    document.title = "Crear Tarea | TP U4y5";
-  }, []);
+  useEffect(() => { document.title = "Gestor de Tareas"; }, []);
 
   const onSubmit = (data) => {
-    // Enviamos la nueva tarea a /tareas mediante navigate state
-    const nueva = { id: Date.now(), titulo: data.titulo };
+    const nueva = { id: Date.now(), titulo: data.titulo.trim() };
     navigate("/tareas", { state: { nuevaTarea: nueva } });
   };
 
   return (
     <section>
       <h2>Crear Tarea</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div style={{ marginBottom: 12 }}>
-          <label htmlFor="titulo">Título de la tarea</label><br />
+      <form className="form" onSubmit={handleSubmit(onSubmit)}>
+        <div>
+          <label htmlFor="titulo">Título de la tarea</label>
           <input
-            id="titulo"
-            type="text"
+            id="titulo" className="input" type="text"
             {...register("titulo", { required: true })}
           />
-          {errors.titulo && (
-            <span style={{ color: "crimson", marginLeft: 8 }}>
-              Este campo es obligatorio.
-            </span>
-          )}
+          {errors.titulo && <div className="error">Este campo es obligatorio.</div>}
         </div>
-        <button type="submit">Guardar</button>
+        <div style={{ display:"flex", gap: 8 }}>
+          <button type="submit" className="btn btn-primary">Guardar</button>
+          <button type="button" className="btn btn-ghost" onClick={()=>navigate(-1)}>Cancelar</button>
+        </div>
       </form>
     </section>
   );
 }
+

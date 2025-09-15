@@ -1,12 +1,15 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default function Navbar() {
-  const linkStyle = { marginRight: 12, textDecoration: "none" };
   return (
-    <nav style={{ padding: "12px 16px", borderBottom: "1px solid #ddd" }}>
-      <Link to="/" style={linkStyle}>Inicio</Link>
-      <Link to="/tareas" style={linkStyle}>Ver Tareas</Link>
-      <Link to="/crear" style={linkStyle}>Crear Tarea</Link>
+    <nav className="navbar">
+      <div className="navbar-inner">
+        <strong style={{ marginRight: 8 }}>Gestor de Tareas</strong>
+        <NavLink to="/" end className={({isActive}) => isActive ? "active" : ""}>Inicio</NavLink>
+        <NavLink to="/tareas" className={({isActive}) => isActive ? "active" : ""}>Ver Tareas</NavLink>
+        <NavLink to="/crear" className={({isActive}) => isActive ? "active" : ""}>Crear Tarea</NavLink>
+      </div>
     </nav>
   );
 }
+
